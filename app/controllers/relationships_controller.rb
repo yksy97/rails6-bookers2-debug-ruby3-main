@@ -23,3 +23,8 @@ end
   end
   
 end
+
+
+NoMethodError in RelationshipsController#destroy
+
+kokokara
