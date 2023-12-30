@@ -22,9 +22,9 @@
 <div class='row'>
   <% unless user == current_user %>
     <% if current_user.following?(user) %>
-      <%= link_to 'フォロー解除', unfollow_path(user_id: user.id), method: :delete, class: "btn btn-outline-danger btn-block" %>
+      <%= link_to 'フォロー外す', unfollow_path(user_id: user.id), method: :delete, class: "btn btn-info btn-sm btn-block mb-3" %>
     <% else %>
-      <%= link_to 'フォローする', follow_path(user_id: user.id), method: :post, class: "btn btn-outline-primary btn-block" %>
+      <%= link_to 'フォローする', follow_path(user_id: user.id), method: :post, class: "btn btn-success btn-sm btn-block mb-3" %>
     <% end %>
   <% end %>
 </div>
