@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :reverse_of_relationships, source: :follower
   
+  # フォロー/フォロワー機能
   def follow(user_id)
     relationships.create(followed_id: user_id)
   end
@@ -25,6 +26,22 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
+  
+  # 検索機能
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
+
   
   
   
