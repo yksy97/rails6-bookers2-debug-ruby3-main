@@ -47,13 +47,13 @@
           <% if @book.favorited_by?(current_user) %>
           <p>
           <%= link_to book_favorite_path(@book), method: :delete do %>
-          ♥<%= @book.favorites.count %> いいね
+          ♥<%= @book.favorites.count %>
           <% end %>
           </p>
           <% else %>
           <p>
           <%= link_to book_favorite_path(@book), method: :post do %>
-          ♡<%= @book.favorites.count %> いいね
+          ♡<%= @book.favorites.count %>
           <% end %>
           </p>
           <% end %>
@@ -61,7 +61,6 @@
 
     <!--コメント機能-->
         <div>
-          <td>コメント件数：<%= @book.book_comments.count %></td>
           <% @book.book_comments.each do |book_comment| %>
           <tr>
             <td><%= image_tag book_comment.user.get_profile_image, size: "100x100" %></td>
