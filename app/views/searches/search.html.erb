@@ -24,26 +24,26 @@
 <% else %>
   <!-- 検索対象モデルがBookの時 -->
   <table class="table table-hover table-inverse">
-    <thead>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
       <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Opinion</th>
+        <td><%= link_to(book.user) do %>
+          <%= image_tag book.user.get_profile_image, size:'50x50' %>
+          <% end %>
+        </td>
+        <td><%= link_to book.title, book_path(book) %></td>
+        <td><%= book.body %></td>
       </tr>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <tr>
-          <td><%= link_to(book.user) do %>
-            <%= image_tag book.user.get_profile_image, size:'50x50' %>
-            <% end %>
-          </td>
-          <td><%= book.title %></td>
-          <td><%= book.body %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <% end %>
+  </tbody>
+</table>
 <% end %>
 
 
