@@ -27,7 +27,12 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          
+           <td id="favorite_btn_<%= @book.id %>">
+             <%= render "favorites/btn", book: @book %>
+           </td>
+           <td id="comment_counter">
+             <%= render "book_comments/counter", book: @book %>
+           </td>
           
           
 
@@ -72,6 +77,11 @@
         </div>
          </tr>
         </table>
+        
+        <div id="comment_index">
+         <%= render "book_comments/index", book: @book %>
+       </div>
+
          <div>
           <%= form_with model: [@book, @book_comment] do |f| %>
           <%= f.text_area :comment, rows: '5' %>
