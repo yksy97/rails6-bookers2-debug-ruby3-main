@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'notices/new'
+  get 'notices/create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
   
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
   
   resources :groups, except: [:destroy] do
     resource :group_users, only: [:create, :destroy]
+    resources :notices, only: [:new, :create]
   end
   
   post 'follow/:id', to: 'relationships#create', as: 'follow'
