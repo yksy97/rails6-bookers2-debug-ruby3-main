@@ -1,30 +1,25 @@
 Rails.application.routes.draw do
-  get 'notices/new'
-  get 'notices/create'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
   
-  resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
+   resources :books, only: [:index, :show, :edit, :create, :destroy, :update] do
     resource :favorite, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
-  resources :users, only: [:index,:show,:edit,:update]
-  
+
+  resources :users, only: [:index, :show, :edit, :update]
+
   resources :groups, except: [:destroy] do
     resource :group_users, only: [:create, :destroy]
-    resources :notices, only: [:new, :create]
+    resources :notices, only: [:new, :create] do
+      get 'sent', on: :member
+    end
   end
-  
+
   post 'follow/:id', to: 'relationships#create', as: 'follow'
   delete 'unfollow/:id', to: 'relationships#destroy', as: 'unfollow'
-  
-  
-  root :to => "homes#top"
-  
+
+  root to: "homes#top"
   get "home/about" => "homes#about"
-  
   get "search" => "searches#search"
 
-  
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

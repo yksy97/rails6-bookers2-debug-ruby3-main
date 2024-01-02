@@ -7,19 +7,24 @@ class NoticesController < ApplicationController
   end
 
   def create
-    @notice = @group.notices.new(notice_params)
-    if @notice.save
-      redirect_to @group, notice: '送信が完了しました'
-    else
-      render :new
-    end
+  @notice = @group.notices.new(notice_params)
+  if @notice.save
+    send_event_notice
+    redirect_to sent_group_notice_path(@group, @notice), notice: '送信が完了しました'
+  else
+    render :new
+  end
   end
   
+  def sent
+  @group = Group.find(params[:group_id])
+  @notice = Notice.find(params[:notice_id])
+  end
+
   def send_event_notice
     @group.users.each do |user|
-      GroupMailer.event_notice(user, @group, params[:event_title], params[:event_body]).deliver_now
+      GroupMailer.event_notice(user, @group, @notice.title, @notice.body).deliver_now
     end
-    redirect_to @group, notice: '送信が完了しました'
   end
 
   private
@@ -29,11 +34,12 @@ class NoticesController < ApplicationController
   end
 
   def check_owner
-    redirect_to root_path unless @group.owner_id == current_user.id
+    unless @group.owner_id == current_user.id
+      redirect_to root_path
+    end
   end
 
   def notice_params
     params.require(:notice).permit(:title, :body)
   end
 end
-
