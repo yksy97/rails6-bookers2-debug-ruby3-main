@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:index,:show,:edit,:update]
   
+  resources :groups, except: [:destroy]
+  
   post 'follow/:id', to: 'relationships#create', as: 'follow'
   delete 'unfollow/:id', to: 'relationships#destroy', as: 'unfollow'
   
